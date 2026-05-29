@@ -1,0 +1,6 @@
+resources:
+  schemas:
+    dab_practice_schema:
+      name: dab_practice_${bundle.target}
+      catalog_name: ${var.catalog}
+      comment: Schema del ejercicio DAB para el target ${bundle.target}.
