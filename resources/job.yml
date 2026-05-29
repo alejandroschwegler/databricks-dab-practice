@@ -1,0 +1,32 @@
+resources:
+  jobs:
+    dab_practice_job:
+      name: dab_practice_job
+
+      parameters:
+        - name: catalog
+          default: ${var.catalog}
+        - name: schema
+          default: ${var.schema}
+
+      trigger:
+        file_arrival:
+          url: ${var.volume_path}/
+
+      email_notifications:
+        on_failure:
+          - alexmad19@gmail.com
+
+      tasks:
+        - task_key: create_ventas_table
+          notebook_task:
+            notebook_path: ../src/create_table.py
+            base_parameters:
+              catalog: "{{job.parameters.catalog}}"
+              schema: "{{job.parameters.schema}}"
+
+        - task_key: refresh_ventas_por_zona
+          depends_on:
+            - task_key: create_ventas_table
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.etl_pipeline.id}
