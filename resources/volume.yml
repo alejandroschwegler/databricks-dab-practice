@@ -1,0 +1,8 @@
+resources:
+  volumes:
+    inputs:
+      name: inputs
+      catalog_name: ${var.catalog}
+      schema_name: ${var.schema}
+      volume_type: MANAGED
+      comment: Dropzone de archivos CSV para disparar el workflow por File Arrival.
