@@ -20,7 +20,6 @@ presets:
     project: ${bundle.name}
     env: ${bundle.target}
   trigger_pause_status: PAUSED
-  skip_name_prefix_for_schema: true
 
 targets:
   dev:
@@ -35,7 +34,6 @@ targets:
     presets:
       name_prefix: "[qa ${workspace.current_user.short_name}] "
       trigger_pause_status: PAUSED
-      skip_name_prefix_for_schema: true
       tags:
         project: ${bundle.name}
         env: ${bundle.target}
@@ -48,7 +46,6 @@ targets:
     presets:
       name_prefix: "[prod ${workspace.current_user.short_name}] "
       trigger_pause_status: UNPAUSED
-      skip_name_prefix_for_schema: true
       tags:
         project: ${bundle.name}
         env: ${bundle.target}
