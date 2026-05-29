@@ -47,7 +47,13 @@ databricks bundle deploy -t dev
 Luego subir los CSVs del directorio `data` al volumen:
 
 ```text
-/Volumes/data-growth/dab_practice_dev/inputs/
+/Volumes/data-growth/<schema_resuelto_por_el_bundle>/inputs/
+```
+
+En el despliegue `dev` validado en este workspace, el schema resuelto fue:
+
+```text
+dev_alejandro_schwegler_dab_practice_dev
 ```
 
 En `dev` y `qa` los triggers quedan pausados. En `prod` el trigger queda activo.
