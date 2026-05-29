@@ -1,0 +1,62 @@
+bundle:
+  name: dab-practice
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Catalogo de Unity Catalog donde se despliegan los recursos.
+    default: data-growth
+  schema:
+    description: Schema creado por el bundle para el target actual.
+    default: ${resources.schemas.dab_practice_schema.name}
+  volume_path:
+    description: Ruta completa del volumen de entrada usado como dropzone.
+    default: /Volumes/${var.catalog}/${var.schema}/inputs
+
+presets:
+  tags:
+    project: ${bundle.name}
+    env: ${bundle.target}
+  trigger_pause_status: PAUSED
+  skip_name_prefix_for_schema: true
+
+targets:
+  dev:
+    mode: development
+    default: true
+
+  qa:
+    mode: production
+    workspace:
+      root_path: /Workspace/dab-practice/${workspace.current_user.short_name}/${bundle.target}/.bundle
+      file_path: /Workspace/dab-practice/${workspace.current_user.short_name}/${bundle.target}/
+    presets:
+      name_prefix: "[qa ${workspace.current_user.short_name}] "
+      trigger_pause_status: PAUSED
+      skip_name_prefix_for_schema: true
+      tags:
+        project: ${bundle.name}
+        env: ${bundle.target}
+
+  prod:
+    mode: production
+    workspace:
+      root_path: /Workspace/dab-practice/${workspace.current_user.short_name}/${bundle.target}/.bundle
+      file_path: /Workspace/dab-practice/${workspace.current_user.short_name}/${bundle.target}/
+    presets:
+      name_prefix: "[prod ${workspace.current_user.short_name}] "
+      trigger_pause_status: UNPAUSED
+      skip_name_prefix_for_schema: true
+      tags:
+        project: ${bundle.name}
+        env: ${bundle.target}
+    resources:
+      jobs:
+        dab_practice_job:
+          email_notifications:
+            on_success:
+              - alexmad19@gmail.com
+            on_failure:
+              - alexmad19@gmail.com
